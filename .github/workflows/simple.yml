@@ -1,1 +1,48 @@
+name: Simple-Calculator
 
+on:
+  push:
+    branches: ["main"]
+  pull_request:
+    branches: ["main"]
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Clone repo
+        uses: actions/checkout@v3
+
+      - name: Testing
+        run: echo "testing"
+
+  build:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: clone repo
+        uses: actions/checkout@v3
+
+
+      - name: Building
+        run: echo 'buiding'
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [ test, build]
+    steps:
+      - name: use apple boy playbook actions to ssh vm
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.PRIVATE_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            sudo cp -r Simple-Calculator-Web-app/* /var/www/html
+            cd Simple-Calculator-Web-app && git pull origin
+            cd /var/www/html
+            sudo systemctl restart nginx
