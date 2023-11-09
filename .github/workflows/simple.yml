@@ -43,6 +43,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             sudo cp -r Simple-Calculator-Web-app/* /var/www/html
-            cd Simple-Calculator-Web-app
-            sudo git pull origin
+            cd Simple-Calculator-Web-app && git pull origin
             sudo systemctl restart nginx
