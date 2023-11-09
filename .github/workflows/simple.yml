@@ -16,7 +16,7 @@ jobs:
       - name: Clone repo
         uses: actions/checkout@v3
 
-      - name: Testing
+      - name: Test
         run: echo "testing"
 
   build:
