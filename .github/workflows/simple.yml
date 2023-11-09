@@ -1,4 +1,4 @@
-name: Simple-Calculator
+name: Simple-Calculator-Web
 
 on:
   push:
